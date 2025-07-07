@@ -11,9 +11,11 @@ builder.Services.AddDbContext<AppDbContext>(opt =>
     opt.UseSqlite(builder.Configuration.GetConnectionString("DefaultConnection"));
 });
 
+builder.Services.AddCors();
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
+app.UseCors(x => x.AllowAnyHeader().AllowAnyMethod().WithOrigins("https://localhost:3000", "http://localhost:3000"));
 app.MapControllers();
 
 /* This code checks if the database is up-to-date (via migrations), seeds it with initial data, and logs any errors during that process. */
